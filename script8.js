@@ -1,13 +1,13 @@
-function formaShow() {
+function formShow() {
     $(".window-wrapper").show();
     window.history.pushState({ "isActive": true }, "", "#form");
     $(".wrapper").addClass("modal-opened");
     $(".background").addClass("blur");
 }
 
-function formaHide() {
+function formHide() {
     $(".window-wrapper").hide();
-    window.history.pushState({ "isActive": false }, "", "html8.html");
+    window.history.pushState({ "isActive": false }, "", "exercise8.html");
     $(".wrapper").removeClass("modal-opened");
     $(".background").removeClass("blur");
 }
@@ -28,7 +28,7 @@ $(document).ready(function () {
         }
     });
 
-    let data = document.querySelectorAll(".information");
+    let data = document.querySelectorAll(".info");
     data.forEach(function (element) {
         element.value = localStorage.getItem(element.name);
         element.addEventListener("blur", function (event) {
@@ -38,14 +38,14 @@ $(document).ready(function () {
 
     window.addEventListener("popstate", function (event) {
         if (event.state.isActive) {
-            formaShow();
+            formShow();
         } else {
-            formaHide();
+            formHide();
         }
     });
 
-    const ajaxSend = (formaData) => {
-        fetch("https://formcarry.com/s/RbmO9k4vDkz", {
+    const ajaxSend = (formData) => {
+        fetch("https://formcarry.com/s/1TauRT8f23J", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +54,7 @@ $(document).ready(function () {
             body: JSON.stringify(formData)
         })
             .then(function (response) {
-                alert("Ñîîáùåíèå îòïðàâëåíî");
+                alert("Ð¡Ð¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¾");
                 data.forEach((element) => { element.value = ""; });
                 $("#check").prop("checked", false);
                 $("#submitButton").prop("disabled", true);
@@ -64,15 +64,14 @@ $(document).ready(function () {
     };
 
     const forms = $("#thatForm");
-    for (let j = 0; j < forms.length; j++) {
-        forms[j].addEventListener("submit", function (e) {
-
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].addEventListener("submit", function (e) {
             e.preventDefault();
 
-            let formaData = new FormaData(this);
-            formaData = Object.fromEntries(formaData);
+            let formData = new FormData(this);
+            formData = Object.fromEntries(formData);
 
-            ajaxSend(formaData);
+            ajaxSend(formData);
         });
     };
 
